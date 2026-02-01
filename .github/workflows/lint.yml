@@ -11,14 +11,14 @@ jobs:
 
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Install Homebrew dependencies
         run: brew install mint
 
       - name: Restore Mint cache
         id: mint-cache
-        uses: actions/cache@v1
+        uses: actions/cache@v4
         with:
           path: /usr/local/lib/mint/
           key: ${{ runner.os }}-mint-${{ hashFiles('**/Mintfile') }}

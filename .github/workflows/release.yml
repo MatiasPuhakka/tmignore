@@ -11,13 +11,13 @@ jobs:
 
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Build
         run: make build
 
       - name: Upload binary to workflow run
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: tmignore
           path: ./bin/tmignore
