@@ -33,8 +33,12 @@ class RunCommand: Command {
 		// Build list of files/directories which should be excluded from Time Machine backups
 		logger.info("Building list of files to exclude from backups…")
 		var exclusions = [String]()
-		for repoPath in repoSet {
-			for path in Git.getIgnoredFiles(repoPath: repoPath) {
+		let repoList = Array(repoSet).sorted()
+		for (index, repoPath) in repoList.enumerated() {
+			logger.info("Processing repo \(index + 1)/\(repoList.count): \(repoPath)")
+			let ignoredFiles = Git.getIgnoredFiles(repoPath: repoPath)
+			logger.info("Ignored entries found: \(ignoredFiles.count) for \(repoPath)")
+			for path in ignoredFiles {
 				// Only exclude path from backups if it is not whitelisted
 				if config.whitelist.allSatisfy({ !pathMatchesGlob(glob: $0, path: path) }) {
 					exclusions.append(path)

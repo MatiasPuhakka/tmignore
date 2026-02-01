@@ -43,16 +43,4 @@ jobs:
           asset_name: tmignore
           asset_content_type: application/octet-stream
 
-  release-homebrew:
-    name: Release on Homebrew
-    runs-on: macos-latest
-    if: startsWith(github.ref, 'refs/tags/v') # Only run on tags
-
-    steps:
-      - uses: mislav/bump-homebrew-formula-action@v1
-        with:
-          formula-name: tmignore
-          homebrew-tap: samuelmeuli/homebrew-tap
-          commit-message: Release `tmignore` v{{version}}
-        env:
-          COMMITTER_TOKEN: ${{ secrets.COMMITTER_TOKEN }}
+# Homebrew release is intentionally omitted for this fork.

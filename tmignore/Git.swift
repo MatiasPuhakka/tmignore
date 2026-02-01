@@ -1,5 +1,4 @@
 import Foundation
-import SwiftExec
 
 /// Class for Git operations
 class Git {
@@ -31,7 +30,7 @@ class Git {
 		} catch {
 			let error = error as! ExecError
 			logger.error(
-				"Error obtaining list of ignored files for repository at path \(repoPath): \(error.execResult.stderr ?? "")"
+				"Error obtaining list of ignored files for repository at path \(repoPath): \(error.execResult.stderr)"
 			)
 		}
 

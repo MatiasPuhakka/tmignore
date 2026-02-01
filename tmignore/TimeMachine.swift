@@ -1,5 +1,4 @@
 import Foundation
-import SwiftExec
 
 /// Class for modifying the list of files/directories which should be excluded from Time Machine
 /// backups
@@ -20,7 +19,7 @@ class TimeMachine {
 				_ = try exec(program: "/usr/bin/tmutil", arguments: ["addexclusion"] + pathChunk)
 			} catch {
 				let error = error as! ExecError
-				logger.error("Failed to add backup exclusions: \(error.execResult.stderr ?? "")")
+				logger.error("Failed to add backup exclusions: \(error.execResult.stderr)")
 			}
 		}
 
@@ -46,7 +45,7 @@ class TimeMachine {
 				// backup. This error occurs for cached exclusions which were deleted, therefore it is
 				// ignored
 				if error.execResult.exitCode != 213 {
-					logger.error("Failed to remove backup exclusions: \(error.execResult.stderr ?? "")")
+					logger.error("Failed to remove backup exclusions: \(error.execResult.stderr)")
 				}
 			}
 		}

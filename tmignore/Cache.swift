@@ -1,5 +1,8 @@
 import Foundation
-import SwiftyJSON
+
+private struct CacheFile: Codable {
+	let paths: [String]
+}
 
 /// Functions for reading/writing a cache file for paths which were excluded from Time Machine
 /// backups in previous script runs.
@@ -35,10 +38,10 @@ class Cache {
 	/// Parses the cache file (if it exists) and returns the cached exclusion paths
 	func read() -> [String] {
 		var paths = [String]()
-		if let jsonData = NSData(contentsOfFile: cacheFilePath) {
+		if let jsonData = FileManager.default.contents(atPath: cacheFilePath) {
 			do {
-				let json = try JSON(data: jsonData as Data)
-				paths = json["paths"].arrayValue.map { $0.stringValue }
+				let cacheFile = try JSONDecoder().decode(CacheFile.self, from: jsonData)
+				paths = cacheFile.paths
 				logger.debug("Found cache file at \(cacheFilePath)")
 			} catch {
 				logger.error("Could not parse cache file: \(error.localizedDescription)")
@@ -53,9 +56,9 @@ class Cache {
 	/// exist yet)
 	func write(paths: [String]) {
 		// Build JSON data which will be written to the cache file
-		var jsonData: Data
+		let jsonData: Data
 		do {
-			jsonData = try JSON(["paths": paths]).rawData()
+			jsonData = try JSONEncoder().encode(CacheFile(paths: paths))
 		} catch {
 			logger.error(
 				"Could not convert cache JSON into raw data: \(error.localizedDescription)"

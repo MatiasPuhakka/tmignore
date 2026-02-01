@@ -1,3 +1,5 @@
 .PHONY: build
 build:
-	xcodebuild archive -derivedDataPath $(shell mktemp -d) -scheme tmignore
+	mkdir -p bin
+	swift build -c release
+	cp .build/release/tmignore bin/tmignore

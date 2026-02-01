@@ -8,13 +8,20 @@ Time Machine on macOS is a highly useful tool for creating backups of all your f
 
 macOS 10.13+ is required to run `tmignore`.
 
-1. Build and install the script using Homebrew (Xcode is required):
+1. Build and install the script using Homebrew (Xcode/Swift is required):
 
    ```sh
-   brew install samuelmeuli/tap/tmignore
+   brew install matiaspuhakka/tap/tmignore
    ```
 
-2. If you want to run the script once:
+2. Alternatively, build locally using SwiftPM:
+
+   ```sh
+   make build
+   ./bin/tmignore run
+   ```
+
+3. If you want to run the script once:
 
    ```sh
    tmignore run
@@ -26,7 +33,9 @@ macOS 10.13+ is required to run `tmignore`.
    brew services start tmignore
    ```
 
-Alternatively, if you don't want to build the binary yourself, you can download the compiled program on the [Releases](https://github.com/samuelmeuli/tmignore/releases/latest) page.
+Alternatively, if you don't want to build the binary yourself, you can download the compiled program on the [Releases](https://github.com/matiaspuhakka/tmignore/releases/latest) page.
+
+Note: This fork does not publish a separate Homebrew formula outside `matiaspuhakka/tap`. If you prefer not to use Homebrew, follow the SwiftPM build instructions above or download a release binary.
 
 ## Commands
 
@@ -48,11 +57,15 @@ You can configure the behavior of `tmignore` by creating a configuration file at
 
 ```json
 {
-	"searchPaths": ["~", "/path/to/another/drive"],
-	"whitelist": ["*/application.yml", "*/config.json", "*/.env.*"]
+  "searchPaths": ["~", "/path/to/another/drive"],
+  "whitelist": ["*/application.yml", "*/config.json", "*/.env.*"]
 }
 ```
 
 ## Contributing
 
 Suggestions and contributions are always welcome! Please discuss larger changes via issue before submitting a pull request.
+
+## Credits
+
+Created by [Samuel Meuli](https://github.com/samuelmeuli). This repository is a maintained fork.
